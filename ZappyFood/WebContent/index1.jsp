@@ -16,7 +16,6 @@ response.addHeader("expire","0");
 
 </head>
 <body style="background-color:#efeef4;">
-
 <div class="organic_food_wrapper">
                 <!--Header start-->
                 <header class="header sticky-header" style="background-color:#c3c1ad">
@@ -37,20 +36,29 @@ response.addHeader("expire","0");
                                         <div class="menu">
                                             <nav>
                                                 <ul>
-                                                <span class="cart-icon-inner"></span>
-                                                    <li><a href="ViewCart"><font size="5px"><i class="ion-android-cart"><b><span class="cart_count">${count}</span></span>View Cart</b></i></a>
+                                                    <li><a href="AdminHome.jsp"><font size="5px"> Home </font></li></a>
                                                     </li>
-                                                    <li><a href=""><font size="5px"> Order History</font> </i></a>
+                                                    <li><a href="AdminHome.jsp"><font size="5px"> What's Zappy</font> </li></a>
                                                     </li>
-
+                                                    <li><a href="AdminHome.jsp"><font size="5px"> Join us</font> </li></a>
+                                                    </li>
+                                                    <li><a href="AdminHome.jsp"><font size="5px"> Contact Us </font></li></a>
+                                                    </li>
+                                                    <li><a href="Signup.jsp"><font size="5px"> SignUp</font></li></a>
+                                                    </li>
+                                                    <li><a href="Login.jsp"><font size="5px"> Login</font></li></a>
+                                                    </li>
+                                                  </a>
+                                                    </li>
                                                         </ul>    
                                                  </ul>
                                             </nav>
                                         </div>
                                     </div>
+                  
                                     <div class="header_right_info d-flex">
-                                       
-                                        <li><a href="Logout.jsp"><font size="5px">Logout</font></a> </li>
+                                        <span class="cart-icon-inner"></span>
+                                        <li><a href="ViewCart"><font size="5px"><i class="ion-android-cart"><b><span class="cart_count">${count}</span></span>View Cart</b></i></font></a> </li>
                                         </div>  
                         </div>
                     </div>
@@ -97,34 +105,30 @@ response.addHeader("expire","0");
    <%@page import="java.sql.*" %>
 <div class="container">
   <div class="row">
-
-<%
-try {
-	  Class.forName("com.mysql.jdbc.Driver");
-	  Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/zappyfood","root","root");
-	  PreparedStatement ps=con.prepareStatement("select  * from product");
-	  ResultSet rs=ps.executeQuery();
+<% 
+ArrayList<ProductBean> list=(ArrayList<ProductBean>)request.getAttribute("LIST");
+ 
+ %>
+ <%
+   for(ProductBean ee:list)
+   {
+	   
 	  %>
-	 
-	  <%
-	  while(rs.next())
-	  {
-		  %>
-		      <div class="col-lg-3 col-md-4 col-xs-6">
+
+		      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 		  
 	 <table class="set" border="1" >
-		<td><img src="imgupload/<%=rs.getString("images")%>" height="150"width="1700" /></td>
+		<tr><td><img src="imgupload/<%=ee.getFilename()%>"  height="150" width="1700"/></td>
 		</tr>
-		 <tr><td><%=rs.getString("category")%></td> </tr>
-		  <tr><td><%=rs.getString("pname")%></td> </tr>
-		       <tr><td>MRP:-<%=rs.getString("price")%> Rs.</td>  </tr>
-		       <tr><td><b></b>  
+		 <tr><td><b><%=ee.getCategory()%></b></td> </tr>
+		  <tr><td><b><%=ee.getProductname()%></b></td> </tr>
+		       <tr><td> <b><%=ee.getProductprice()%> Rs.</b></td>  </tr>
 		       <form action="./cartdetail" method="post">
 		       
-		       <input type="text" name="pid" hidden value="<%=rs.getInt("pid")%>"></td></tr>
+		       <input type="hidden" name="pid"  value="<%=ee.getPid()%>"></td></tr>
 		       <tr><td><b></b>
 		       <lable>Quantity</lable>
-		       <input type="number" name="quantity" value="1" ></td></tr>
+		       <input type="number" name="quantity" value="1"></td></tr>
 		       <tr><td><button type="submit" class="btn btn-primary btn-sm btn-block">Add To Cart</button></td></tr>
 		       <tr>  <td></td>  </tr>
 		       <br>
@@ -137,13 +141,7 @@ try {
 	  
 	  %>
 	  
-	  <%
-	  con.close();
-}catch(Exception e)
-{
-	  System.out.println(e);
-}
-%>
+	  
 </div>
   </div>
   

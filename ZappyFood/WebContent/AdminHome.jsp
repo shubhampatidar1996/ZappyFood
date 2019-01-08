@@ -51,7 +51,7 @@
         if(uid==null)
 	   response.sendRedirect("index.jsp");
 	   %>
-	<center><font color=red><h1>Welcome,<%=uid %> at Admin Home</h1></font><hr/>
+	<center><font color="red"><h1>Welcome <%=uid %> </h1></font><hr/>
 	</center>
 </body>
 </html>

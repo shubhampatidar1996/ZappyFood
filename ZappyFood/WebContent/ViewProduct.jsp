@@ -40,11 +40,6 @@
                                             </nav>
                                         </div>
                                     </div>
-                                    <div class="header_right_info d-flex">
-                                       <ul>
-                                        <li><a href="Signup.jsp">Cart</a> </li>
-                                        </ul>
-                                        </div>  
                         </div>
                     </div>
                 </header>
@@ -70,7 +65,7 @@
 	<td> <%=e.getProductname()%> </td>
 	 <td><%=e.getProductprice()%> </td>
 	 <td><%=e.getDescription()%> </td>
-	 <td><img src="images/<%=e.getImage()%>" height="100"width="100" /></td>
+	 <td><img src="imgupload/<%=e.getFilename()%>" height="90"width="1000" /></td>
 	 
  <td> <a href="ProductUpdate?ppid=<%=e.getPid()%>" class="glyphicon glyphicon-edit"  onClick="return confirm('Do you really want to Update this record?')"></a> </td>
 	

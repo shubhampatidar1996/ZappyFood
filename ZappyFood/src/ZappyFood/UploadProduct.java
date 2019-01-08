@@ -152,13 +152,13 @@ public class UploadProduct extends HttpServlet {
 		if(x!=0)
 	    {
 	    javax.servlet.RequestDispatcher rd=request.getRequestDispatcher("AddProduct.jsp");
-	    request.setAttribute("msg","<h1>Data Inserted Successfully...</h1>");
+	    request.setAttribute("msg","<h3>Data Inserted Successfully...</h3>");
 	    rd.forward(request, response);
 	    
 	    
 	    }
 	    else
-	    	out.println("<h1>Data Not Inserted</h1>");
+	    	out.println("<h3>Data Not Inserted</h3>");
 
     }catch(Exception ex)
   {

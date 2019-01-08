@@ -27,11 +27,11 @@
                                         <div class="menu">
                                             <nav>
                                                 <ul>
-                                                    <li><a href="AdminHome.jsp"><font size="5px"> Home </i></a>
+                                                    <li><a href="AdminHome.jsp"><font size="5px"> Home</font> </i></a>
                                                     </li>
                                                     <li><a href=""><font size="5px"> What's Zappy</font> </i></a>
                                                     </li>
-                                                    <li><a href=""><font size="5px"> Join us</font> </i></a>
+                                                    <li><a href=""><font size="5px"> Join us</font></i></a>
                                                     </li>
                                                     <li><a href=""> <font size="5px">Contact Us</font> </i></a>
                                                     </li>
@@ -42,10 +42,7 @@
                                             </nav>
                                         </div>
                                     </div>
-                                    <div class="header_right_info d-flex">
-                                       
-                                        <li><a href="">Cart</a> </li>
-                                        </div>  
+                                
                         </div>
                     </div>
                 </header>

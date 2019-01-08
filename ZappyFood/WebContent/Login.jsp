@@ -47,10 +47,7 @@
                                             </nav>
                                         </div>
                                     </div>
-                                    <div class="header_right_info d-flex">
-                                       
-                                        <li><a href="Signup.jsp">Cart</a> </li>
-                                        </div>  
+                                    
                         </div>
                     </div>
                 </header>

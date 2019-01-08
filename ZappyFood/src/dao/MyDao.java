@@ -107,13 +107,13 @@ public class MyDao {
 		ArrayList<ProductBean> list=new ArrayList<>();
 		try {
 			Connection con=start();
-			PreparedStatement ps=con.prepareStatement("select category,pname,price,images from product");
+			PreparedStatement ps=con.prepareStatement("select * from product");
 			ResultSet rs=ps.executeQuery();
 			while(rs.next())
 				
 			{ 
 				ProductBean e=new ProductBean();
-				
+				e.setPid(rs.getInt("pid"));
 				e.setCategory(rs.getString("category"));
 				e.setProductname(rs.getString("pname"));
 				e.setProductprice(rs.getString("price"));
@@ -279,8 +279,8 @@ public class MyDao {
 		ArrayList<ProductBean> list=new ArrayList<>();
 		try {
 			Connection con=start();
-			PreparedStatement ps=con.prepareStatement("select p.images,p.pname,p.price,c.quantity from product p,cart c where p.pid=c.pid");
-			
+			PreparedStatement ps=con.prepareStatement("select p.images,p.pname,p.price,c.quantity from product p,cart c where p.pid=c.pid And c.user=? ");
+			ps.setString(1,user);
 			ResultSet rs=ps.executeQuery();
 			while(rs.next())
 			{ 
@@ -301,5 +301,29 @@ public class MyDao {
 	return list;
 		
 	}
+	
+	public int cartCount(String user)
+	 { 
+		 int count=0;
+		 try {
+		 Connection con = start();
+		 PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM cart WHERE user=?");
+		 ps.setString(1,user);	
+		 ResultSet rs = ps.executeQuery();
+		 System.out.println(user);
+	     if(rs.next())
+	     {
+	    	 count=rs.getInt("COUNT(*)");
+	     }
+	 
+	 
+	 }catch(Exception e)
+	 {
+		 System.out.println(e);
+	 }
+			 return count;
+	 }
+	
+	
 	
 }

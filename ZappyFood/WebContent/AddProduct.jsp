@@ -40,10 +40,7 @@
                                             </nav>
                                         </div>
                                     </div>
-                                    <div class="header_right_info d-flex">
-                                       
-                                        <li><a href=""><font size="5px">View Cart</font></a> </li>
-                                        </div>  
+                                    
                         </div>
                     </div>
                 </header>
@@ -56,7 +53,7 @@
        
        %>
 	   
-	<center><font color=red><h1>Welcome,<%=uid%></h1></font><hr/>
+	<center><font><h1>Welcome <%=uid%> </h1></font>
 	
 	</center>
 	
@@ -69,10 +66,8 @@
 </div>
 <%
 }
-    %>
-
-
-	<div class="container">
+%>
+<div class="container">
 	<div class="col-sm-3">
     <form action="./UploadProduct" method="post" enctype="multipart/form-data">
  

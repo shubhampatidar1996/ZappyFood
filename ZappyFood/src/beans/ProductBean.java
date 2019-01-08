@@ -6,6 +6,7 @@ int pid;
 String name,emailid,password,address;
 String quantity,image;
 String user;
+
 public String getUser() {
 	return user;
 }

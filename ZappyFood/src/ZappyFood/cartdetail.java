@@ -85,6 +85,6 @@ public class cartdetail extends HttpServlet {
 		else
 		{
 			out.println("Product Not added");
-		}
+		 }
 		}
 	}

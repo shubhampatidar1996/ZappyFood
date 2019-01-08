@@ -36,21 +36,15 @@
                                             </nav>
                                         </div>
                                     </div>
-                                    <div class="header_right_info d-flex">
-                                       
-                                        <li><a href="Signup.jsp">Cart</a> </li>
-                                        </div>  
                         </div>
                     </div>
                 </header>
   
 	${msg}
-	
-	
- <div class="container">
+	<div class="container">
    
  <table class="table table-bordered">
- <tr><th>Image</th><th>Product Name</th><th>Price</th><th>Quantity</th></tr>
+ <tr><th>Image</th><th>Product Name</th><th>Quantity</th><th>Price</th></tr>
  <% 
  ArrayList<ProductBean> list=(ArrayList<ProductBean>)request.getAttribute("LIST");
  %>
@@ -60,7 +54,7 @@
    {
 	  %>
    	 <tr>
-   	<td><img src="images/<%=e.getImage()%>" height="100"width="100" /></td>
+   	<td><img src="imgupload/<%=e.getImage()%>" height="100"width="100" /></td>
    	<td> <%=e.getProductname()%> </td>
    	<td><%=e.getProductprice()%></td>
 	<td> <%=e.getQuantity()%> </td>
@@ -82,4 +76,3 @@
         <script src="assets/js/plugins.js"></script>
         <script src="assets/js/main.js"></script>
   </body>
-  </table></div>

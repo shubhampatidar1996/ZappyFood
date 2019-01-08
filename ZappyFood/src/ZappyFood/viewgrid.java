@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beans.ProductBean;
 import dao.MyDao;
@@ -34,10 +35,23 @@ public class viewgrid extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		response.setContentType("text/html");
-		MyDao m=new MyDao();
-	      ArrayList<ProductBean> list= m.viewIndexProduct();
+		HttpSession session=request.getSession();
+		String user=(String)session.getAttribute("uid");
+		
+		if(user==null)
+		{
+			user=request.getRemoteAddr();
+			
+		    
+		}
+		  MyDao m=new MyDao();
+		  int count=m.cartCount(user);
+			request.setAttribute("count", count);
+		  
+		  
+		  ArrayList<ProductBean> list= m.viewIndexProduct();
 
-	      RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
+	      RequestDispatcher rd=request.getRequestDispatcher("index1.jsp");
 	     request.setAttribute("LIST", list);
 	      rd.forward(request, response);
 	}

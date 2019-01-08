@@ -50,10 +50,6 @@ public class ViewCart extends HttpServlet {
 
 		
 		PrintWriter out=response.getWriter();
-		
-		
-		out.println("<center><a href=AHome><h4>Click here for go to Home Page</h2></a></center>");
-		out.println("<center><a href=index.html><h4>Click here for Log Out</h2></a></center>");
 
 	}
 	
