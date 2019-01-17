@@ -2,6 +2,8 @@ package ZappyFood;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -42,49 +44,130 @@ public class cartdetail extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		PrintWriter out=response.getWriter();
-		String quantity=request.getParameter("quantity");
-		String id=request.getParameter("pid");
-		HttpSession session=request.getSession();
-		String user=(String)session.getAttribute("uid");
-
+PrintWriter out =response.getWriter();
 		
-		if(user==null)
-		{
-			user=request.getRemoteAddr();
-			ProductBean e=new ProductBean();
-			e.setQuantity(quantity);
-			e.setPid(Integer.parseInt(id));
-			e.setUser(user);
-			MyDao obj=new MyDao();
-			int x=obj.cartdetails(e);
-			if(x==1)
+		String quantity=request.getParameter("qty");
+			String pid=request.getParameter("pid");
+			HttpSession session=request.getSession();
+
+			String user=(String)session.getAttribute("uid");
+			  MyDao m=new MyDao();
+			if(user==null)
 			{
-				RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
-				request.setAttribute("msg", "<h3>Product Added to your cart</h3>");
-				rd.forward(request, response);
-				}
-			
-		}
-		else if(user!=null)
-		{
-			ProductBean e=new ProductBean();
-			e.setQuantity(quantity);
-			e.setPid(Integer.parseInt(id));
-			e.setUser(user);
-			MyDao obj=new MyDao();
-			int x=obj.cartdetails(e);
-			if(x==1)
-			{
-				RequestDispatcher rd=request.getRequestDispatcher("CustomerHome.jsp");
-				request.setAttribute("msg", "<h3>Product Added to your cart</h3>");
-				rd.forward(request, response);
+				user=request.getRemoteAddr();
+				ProductBean e=new ProductBean();
+				  e.setPid(Integer.parseInt(pid));
+				  e.setQuantity(quantity);
+				  e.setUser(user);
+				   int y=m.quantityCheck(pid, user);
+					if(y==1)
+					{
+												
+						e.setQuantity(quantity);
+				         e.setPid(Integer.parseInt(pid));
+				         e.setUser(user);
+				         System.out.println("true");
+				        
+				    	
+				    	
+			       int x=m.updateQuantityViaCart(e , quantity);
+			  
+//				    	
+//				      request.setAttribute("LIST3", list3);
+				    	RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
+				    	request.setAttribute("msg","<h3>Product added to cart..</h3>");	
+				    	rd.forward(request, response);	
+				    	//out.println("<h2>Added to cart...</h2>");
+			    	
+					}
+					
+            if(y==0) {
+				  MyDao d=new MyDao();
+				  int x=d.cartdetails(e);
+				  
+				  if(x!=0)
+				    {
+					  int count = m.cartCount(user); 
+					request.setAttribute("count", count);
+
+					
+					  ArrayList<ProductBean> list1= m.viewProduct();
+
+
+					  
+					  request.setAttribute("LIST1", list1);
+					  
+					  
+					  RequestDispatcher rd=request.getRequestDispatcher("index1.jsp");
+					  
+				    request.setAttribute("msg","<h3 style=margin-top:18px;>Product Added To your Cart Successfully...</h3>");
+				    rd.forward(request, response);
+				    
+				    
+				    }
 			}
-			
-		}
-		else
-		{
-			out.println("Product Not added");
-		 }
-		}
+			}
+			else if(user!=null)
+	  {
+				ProductBean c=new ProductBean();
+		  c.setPid(Integer.parseInt(pid));
+		  c.setQuantity(quantity);
+		  c.setUser(user);
+		  int z=m.quantityCheck(pid, user);
+			if(z==1)
+			{
+										
+			c.setQuantity(quantity);
+		         c.setPid(Integer.parseInt(pid));
+		         c.setUser(user);
+		       //  System.out.println("true");
+		        
+		    	
+		    	
+	       int x=m.updateQuantityViaCart(c , quantity);
+	  
+//		    	
+//		      request.setAttribute("LIST3", list3);
+		    	RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
+		    	request.setAttribute("msg","<h3>Product added to cart..</h3>");	
+		    	rd.forward(request, response);	
+		    	//out.println("<h2>Added to cart...</h2>");
+	    	
+			}
+		if(z==0) {
+		  MyDao o=new MyDao();
+		  int x=o.cartdetails(c);
+		  
+		  if(x!=0)
+		    {
+			  int count = m.cartCount(user); 
+				request.setAttribute("count", count);
+
+			  ArrayList<ProductBean> list1= m.viewProduct();
+
+
+			 
+			  request.setAttribute("LIST1", list1);
+			 
+			  RequestDispatcher rd=request.getRequestDispatcher("CustomerHome.jsp");
+		    
+		    request.setAttribute("msg","<h3>Product Added to your cart Successfully...</h3>");
+		    rd.forward(request, response);
+		    
+		    
+		    }
+		  
+	  }
+	  }
+	   // else
+	    	{
+	    	out.println("<h3>Product Not Added to your cart</h3>");
+	    	}
+
+
+
+	  
+		  
+	
+	}
 	}

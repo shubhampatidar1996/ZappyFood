@@ -2,10 +2,34 @@ package beans;
 
 public class ProductBean {
 String category,productname,productprice,description,filename;
-int pid;
+int pid,cid;
 String name,emailid,password,address;
-String quantity,image;
-String user;
+String quantity,image,total;
+public int getCid() {
+	return cid;
+}
+
+public String getTotal() {
+	return total;
+}
+
+public void setTotal(String total) {
+	this.total = total;
+}
+
+public void setCid(int cid) {
+	this.cid = cid;
+}
+
+String user,mobileno;
+
+public String getMobileno() {
+	return mobileno;
+}
+
+public void setMobileno(String mobileno) {
+	this.mobileno = mobileno;
+}
 
 public String getUser() {
 	return user;

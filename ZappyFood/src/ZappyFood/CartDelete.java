@@ -1,7 +1,6 @@
 package ZappyFood;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -16,16 +15,16 @@ import beans.ProductBean;
 import dao.MyDao;
 
 /**
- * Servlet implementation class ViewCart
+ * Servlet implementation class CartDelete
  */
-@WebServlet("/ViewCart")
-public class ViewCart extends HttpServlet {
+@WebServlet("/CartDelete")
+public class CartDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ViewCart() {
+    public CartDelete() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,32 +33,32 @@ public class ViewCart extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
 		MyDao m=new MyDao();
 		HttpSession session=request.getSession();
+
 		String user=(String)session.getAttribute("uid");
-		if(user==null)
-		{
-			user=request.getRemoteAddr();
-		}
+
+		int cid =Integer.parseInt(request.getParameter("cartid"));
+       int x=m.deleteCart(cid);
+   if(x!=0)
+   {
 	      ArrayList<ProductBean> list= m.JoinCartBean(user);
 	      ArrayList<ProductBean> listt= m.cartTotal(user);
-	      int count = m.cartCount(user); 
-			request.setAttribute("count", count);
-			int gtot = m.gTotal(user);
-	      RequestDispatcher rd=request.getRequestDispatcher("ViewCart.jsp");
-	     request.setAttribute("LIST", list);
-	     request.setAttribute("gtot", gtot);
-	     request.setAttribute("LISTT", listt);
-	      rd.forward(request, response);
+	   RequestDispatcher rd=request.getRequestDispatcher("ViewCart");
+	   request.setAttribute("LIST", list);
+	   request.setAttribute("LISTT", listt);
+		    request.setAttribute("msg","Product: "+cid+ " deleted Successfully..");
+	   rd.forward(request, response);
+   }
 
 	}
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
+
 }

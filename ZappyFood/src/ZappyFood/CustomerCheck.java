@@ -11,20 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.ProductBean;
 import dao.MyDao;
 
 /**
- * Servlet implementation class SignUp
+ * Servlet implementation class CustomerCheck
  */
-@WebServlet("/SignUp")
-public class SignUp extends HttpServlet {
+@WebServlet("/CustomerCheck")
+public class CustomerCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SignUp() {
+    public CustomerCheck() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,34 +40,31 @@ public class SignUp extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
 		PrintWriter out=response.getWriter();
-		String Cname=request.getParameter("name");
-		String Cemailid=request.getParameter("emailid");
-		String Cpassword=request.getParameter("password");
-		String mobileno=request.getParameter("mnumber");
-		String Caddress=request.getParameter("address");
+		String email=request.getParameter("email");
+		String pwd=request.getParameter("pwd");
+		String IP=request.getRemoteAddr();
+		MyDao m=new MyDao();
+		   int x=m.CustomerLogin(email, pwd);
+		  int y=m.cartUpdate(email,IP);
+		   if(x==1 || y==1 )
+			{
+			   //Session code here
+				HttpSession session=request.getSession();
+				session.setAttribute("uid",email);
+				response.sendRedirect("viewgridcustomer");
+				
+			}
+			else {
+				RequestDispatcher rd=request.getRequestDispatcher("CustomerLogin.jsp");
+				request.setAttribute("msg","Login fail try again...");
+				rd.forward(request,response);
+				  //response.sendRedirect("index.jsp");
+			}
 		
-		try {
-			ProductBean e=new ProductBean();
-			e.setName(Cname);
-			e.setEmailid(Cemailid);
-			e.setPassowrd(Cpassword);
-			e.setMobileno(mobileno);
-			e.setAddress(Caddress);
-			
-			MyDao m=new MyDao();
-			int x=m.SignupCheck(e);
-			
-			if(x!=0)
-		    {
-		    javax.servlet.RequestDispatcher rd=request.getRequestDispatcher("Signup.jsp");
-		    request.setAttribute("msg","<h1>Successfully Registered...</h1>");
-		    rd.forward(request, response);
-		    }
-		}catch(Exception e)
-		{
-			System.out.println(e);
-		}
+	
+		
+
 	}
-}
+	}
+
